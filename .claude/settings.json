@@ -1,0 +1,22 @@
+{
+  "outputStyle": "Thinking partner",
+  "voice": {
+    "enabled": true,
+    "mode": "tap"
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/speak.mjs"],
+            "async": true,
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}
