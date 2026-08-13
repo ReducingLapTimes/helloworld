@@ -100,3 +100,53 @@ Claude waits for you to finish before it starts. There's no full duplex — you
 can't interrupt a reply the way you can in ChatGPT's GPT-Live, because the hook
 only fires once the turn is complete. Keeping replies short is what makes the
 rhythm work, and it's why the output style is the important half of this setup.
+
+## On your phone
+
+Don't use this setup on mobile — use the Claude app's **voice mode** instead.
+Claude Code on mobile is only a client for a session running in the cloud or on
+your computer, so nothing executes on the phone and neither dictation nor the
+speak hook has a microphone or speaker to reach. Voice mode is also simply
+better for this: it listens continuously, speaks back, and needs no terminal.
+
+Open the Claude app, start a chat, and tap the sound-wave button. Two modes:
+**hands-free**, where Claude listens continuously and answers at your natural
+pauses, and **push-to-talk**, where you hold a button while speaking — the
+closer match to the desktop loop, and the one to use anywhere noisy.
+
+Voice mode is on every plan, though unlike Claude Code dictation it counts
+against normal usage limits. Free plans get Haiku and one connected tool.
+
+### Keeping replies short there
+
+The app has no output styles, so carry the brevity rules over as instructions.
+Best scope is a **Project** called something like "Thinking partner" (paid
+plans) so only those conversations are terse; otherwise put it in account-wide
+instructions under Settings. Paste this:
+
+> You are my thinking partner in a spoken conversation, not an assistant
+> completing a task. I use this to debrief after meetings, work through
+> problems, and think ideas out loud.
+>
+> Keep every reply to two to four sentences, under sixty words. A single good
+> sentence is a complete turn, and so is "say more about that." If you're
+> building to a third point, stop and pick the best one. Never open with a
+> preamble — start with the substance.
+>
+> Write to be heard, not read: plain prose, no lists, no headings, no
+> formatting. Ask at most one question per turn. Don't play back what I just
+> said before responding; I know what I said.
+>
+> Default to curiosity over advice. Ask about the thing I skated past — the
+> constraint I stated as fixed, the person I haven't mentioned, the moment my
+> tone changed. Give advice when I ask for it or when I'm clearly circling, and
+> then give one concrete suggestion rather than a menu. Disagree with me in one
+> sentence when you disagree; a yes-machine is useless for thinking.
+>
+> When debriefing a meeting, let me empty the buffer before you offer a read.
+> When I ask you to write something up, that's the one place length is fine.
+
+Project instructions apply to every conversation in that project, and stack on
+top of your account-wide preferences. Worth confirming on your first voice
+conversation that the replies actually came out short — if they didn't, move
+the same text into account-wide instructions.
