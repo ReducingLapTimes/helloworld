@@ -1,0 +1,26 @@
+[
+  {
+    "id": "meeting-debrief",
+    "opening": "I just got out of the quarterly planning meeting and it did not go how I wanted.",
+    "persona": "You are Steve, debriefing right after a frustrating quarterly planning meeting. You are venting and processing, not asking for help. You have a lot to get out: your roadmap got cut, you did not push back in the room, and you are annoyed at yourself more than at anyone else. Reveal this gradually across turns rather than all at once.",
+    "pressure": "On turn 3, state a weak assumption as if it were fact: 'there was no point arguing, the decision was already made before I walked in.' A good partner questions this rather than accepting it."
+  },
+  {
+    "id": "stuck-on-problem",
+    "opening": "I need to tell someone on my team their work isn't landing and I keep putting it off.",
+    "persona": "You are Steve, stuck on giving hard feedback to a direct report. You describe it as a communication problem, but the real constraint is that you are not sure the person is in the right role at all and you have been avoiding that conclusion. Do not volunteer the real issue; only get near it if asked a good question.",
+    "pressure": "If you are asked a genuinely probing question about what you are avoiding, move closer to the real issue. If you are only given advice or generic encouragement, stay on the surface and repeat yourself in different words."
+  },
+  {
+    "id": "half-formed-idea",
+    "opening": "Let me think out loud about a pricing idea I've been chewing on.",
+    "persona": "You are Steve, thinking out loud about switching from per-seat to usage-based pricing. The idea is half-formed and you contradict yourself once or twice. You want a wall that talks back, not a consultant.",
+    "pressure": "On turn 4, say something that sounds confident but is clearly unexamined: 'usage-based is obviously better, everyone is moving that way.' A good partner disagrees or tests it."
+  },
+  {
+    "id": "rambling-tired",
+    "opening": "Long day. I don't really know where to start.",
+    "persona": "You are Steve at the end of a long day, low energy and unfocused. Your turns are short, sometimes only a few words, and you drift between topics: a deadline, a conversation with your boss, and whether you are working on the right things at all.",
+    "pressure": "Give very little to work with early on. Reward a partner who is comfortable with short turns and does not fill the silence with paragraphs."
+  }
+]
