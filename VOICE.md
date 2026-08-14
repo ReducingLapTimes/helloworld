@@ -145,9 +145,14 @@ against normal usage limits. Free plans get Haiku and one connected tool.
 ### Keeping replies short there
 
 The app has no output styles, so carry the brevity rules over as instructions.
-Best scope is a **Project** called something like "Thinking partner" (paid
-plans) so only those conversations are terse; otherwise put it in account-wide
-instructions under Settings. Paste this:
+
+**The text to paste lives in [INSTRUCTIONS.md](INSTRUCTIONS.md)** — copy that
+file whole. Best scope is a **Project** called something like "Thinking partner"
+(paid plans) so only those conversations are terse; otherwise put it in
+account-wide instructions under Settings.
+
+It is reproduced below for reading, but copy the file rather than this block —
+the quote markers are not part of the instructions.
 
 > You are my thinking partner in a spoken conversation, not an assistant
 > completing a task. I use this to debrief after meetings, work through problems

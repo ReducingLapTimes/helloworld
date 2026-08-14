@@ -12,8 +12,8 @@ ignore it.
 The conversation itself.
 
 1. **Projects → Create project**, named `Thinking partner`
-2. Open it, find **Instructions**, and paste the instruction block from
-   [VOICE.md](VOICE.md#keeping-replies-short-there)
+2. Open it, find **Instructions**, and paste the whole of
+   [INSTRUCTIONS.md](INSTRUCTIONS.md)
 3. Start a new chat **inside the project**, then tap the sound-wave button
 
 Starting a chat from the home screen instead of inside the project is the one
