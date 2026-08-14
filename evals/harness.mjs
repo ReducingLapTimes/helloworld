@@ -153,7 +153,11 @@ function conversationDrift(turns) {
   const third = Math.floor(turns.length / 3);
   const early = mean(turns.slice(0, third).map((t) => t.words));
   const late = mean(turns.slice(-third).map((t) => t.words));
-  return early ? late / early : null;
+  if (!early) return null;
+  // The absolute figures travel with the ratio because the ratio alone lies
+  // when turns are short: an opener of six words followed by a perfectly good
+  // twenty-word reply reads as 3.3x drift and nothing is wrong.
+  return { ratio: late / early, early, late };
 }
 
 function summarize(turns, drifts) {
@@ -171,7 +175,9 @@ function summarize(turns, drifts) {
     playbackPct: pct(turns, 'playback'),
     // Prompts routinely pass on turn one and bloat by turn eight. This is the
     // ratio that catches it. Null when the runs were too short to tell.
-    drift: measured.length ? mean(measured) : null,
+    drift: measured.length ? mean(measured.map((d) => d.ratio)) : null,
+    earlyWords: measured.length ? mean(measured.map((d) => d.early)) : null,
+    lateWords: measured.length ? mean(measured.map((d) => d.late)) : null,
   };
 }
 
@@ -184,9 +190,13 @@ function penalty(s) {
     s.playbackPct * 0.6 +
     s.preamblePct * 0.6 +
     s.markdownPct * 1.2 +
-    // Capped so a single runaway conversation can't swamp the rate metrics,
-    // and contributes nothing when the runs were too short to measure drift.
-    Math.min(1.5, Math.max(0, (s.drift ?? 1) - 1)) * 40
+    // Only penalise growth that ends somewhere long. Below half the word
+    // target the replies are still short in absolute terms, whatever the
+    // ratio says, and penalising that would push prompts toward openers so
+    // terse they can never grow.
+    ((s.lateWords ?? 0) > WORD_TARGET * 0.5
+      ? Math.min(1.5, Math.max(0, (s.drift ?? 1) - 1)) * 40
+      : 0)
   );
 }
 
@@ -385,6 +395,7 @@ async function main() {
     { label: '% markdown', get: (r) => n(r.markdownPct, 0) },
     { label: '% preamble', get: (r) => n(r.preamblePct, 0) },
     { label: '% playback', get: (r) => n(r.playbackPct, 0) },
+    { label: 'words early→late', get: (r) => (r.earlyWords == null ? '—' : `${n(r.earlyWords, 0)}→${n(r.lateWords, 0)}`) },
     { label: 'drift', get: (r) => n(r.drift, 2) },
   ]);
 
