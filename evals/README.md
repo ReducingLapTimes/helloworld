@@ -46,6 +46,27 @@ that depends on your situation and your taste.
 The intended split: let the harness rank candidates on compliance and drift,
 then take the top two into real conversations for a day and pick by feel.
 
+## Tuning from the Claude app instead
+
+The harness needs to make hundreds of calls, so it can't run inside a claude.ai
+chat project — that sandbox has no outbound network. Two routes that don't need
+a terminal:
+
+**Run this harness from the Code tab.** A cloud session in the Claude app has an
+authenticated `claude` CLI, so you can open the repo there, say "run the eval
+sweep," and read the report on your phone. Same app as your conversations, just
+the Code tab rather than Chat.
+
+**Score real transcripts in a chat project.** `transcript-scorer.md` is an
+instruction set for a second project. Paste a transcript from a real voice
+conversation and it computes the same metrics using code execution — which needs
+no network — then applies the judge rubric and recommends one edit.
+
+The second is the better feedback loop, because it scores conversations you
+actually had rather than ones a simulated user invented. Use the harness to rank
+candidates before you commit to one, and the scorer to keep tuning the one you're
+living with.
+
 ## Fidelity caveat
 
 The harness drives `claude -p --system-prompt <candidate>`, which is Claude Code
