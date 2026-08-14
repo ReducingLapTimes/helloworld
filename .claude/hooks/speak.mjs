@@ -9,11 +9,21 @@
 // Disable at any time by creating .claude/.voice-off in the project.
 
 import { spawn } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync, unlinkSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, unlinkSync, appendFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
 const MAX_SPOKEN_CHARS = Number(process.env.VOICE_MAX_CHARS || 700);
+
+// Set VOICE_DEBUG=1 to trace the hook. A Stop hook is invisible when it fails,
+// so without this there is no way to tell "never ran" from "ran and stayed quiet".
+const DEBUG_LOG = process.env.VOICE_DEBUG ? join(tmpdir(), 'claude-speak-debug.log') : null;
+function trace(message) {
+  if (!DEBUG_LOG) return;
+  try {
+    appendFileSync(DEBUG_LOG, `${new Date().toISOString()} ${message}\n`);
+  } catch {}
+}
 
 const read = (stream) =>
   new Promise((resolve) => {
@@ -126,21 +136,33 @@ async function speakWithElevenLabs(text, pidFile) {
 }
 
 async function main() {
+  trace('hook started');
   let payload;
   try {
     payload = JSON.parse(await read(process.stdin));
-  } catch {
+  } catch (err) {
+    trace(`could not parse stdin: ${err.message}`);
     return;
   }
 
   const projectDir = payload.cwd || process.env.CLAUDE_PROJECT_DIR || process.cwd();
-  if (existsSync(join(projectDir, '.claude', '.voice-off'))) return;
+  if (existsSync(join(projectDir, '.claude', '.voice-off'))) {
+    trace('muted by .voice-off marker');
+    return;
+  }
 
   const message = payload.last_assistant_message;
-  if (typeof message !== 'string' || !message.trim()) return;
+  if (typeof message !== 'string' || !message.trim()) {
+    trace(`no usable last_assistant_message (keys: ${Object.keys(payload).join(',')})`);
+    return;
+  }
 
   const spoken = trimToLimit(toSpeech(message), MAX_SPOKEN_CHARS);
-  if (!spoken) return;
+  if (!spoken) {
+    trace('nothing left to speak after stripping markdown');
+    return;
+  }
+  trace(`speaking ${spoken.length} chars`);
 
   const pidFile = join(tmpdir(), `claude-speak-${payload.session_id || 'default'}.pid`);
   stopPreviousSpeech(pidFile);

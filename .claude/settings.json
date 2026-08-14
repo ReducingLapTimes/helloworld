@@ -12,8 +12,7 @@
             "type": "command",
             "command": "node",
             "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/speak.mjs"],
-            "async": true,
-            "timeout": 15
+            "timeout": 10
           }
         ]
       }

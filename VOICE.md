@@ -69,6 +69,31 @@ On macOS, download a Premium or Enhanced voice under System Settings → Accessi
 If ElevenLabs fails for any reason, the hook falls back to the OS voice rather
 than dropping the reply.
 
+## If you hear nothing
+
+The hook is silent by design, so a failure looks identical to working. Turn on
+tracing:
+
+```bash
+VOICE_DEBUG=1 claude
+```
+
+Then check `/tmp/claude-speak-debug.log` after a reply. It records whether the
+hook started, whether it was muted, and how much text it handed to the engine.
+No log at all means the hook never ran; a log ending at "speaking N chars" means
+the hook worked and the problem is your audio engine.
+
+Test the engine on its own:
+
+```bash
+echo '{"session_id":"t","cwd":"'$PWD'","last_assistant_message":"Testing one two three."}' \
+  | VOICE_DEBUG=1 node .claude/hooks/speak.mjs
+```
+
+The hook runs synchronously on purpose. It hands the audio to a detached player
+and returns in about a hundred milliseconds, so it never blocks the session —
+and running it async risks the process being killed before it starts.
+
 ## How it works
 
 Three pieces, all in `.claude/`:

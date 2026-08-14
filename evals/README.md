@@ -56,12 +56,23 @@ drift there. Exact word counts won't match.
 
 ## Cost
 
-Every call goes through your `claude` login and counts against your usage. A
-full sweep is 4 candidates x 4 scenarios x 8 turns, which is 240 calls and ran
-around $10 in testing. `--dry-run` prints the call count before you commit, and
-the run reports actual spend at the end.
+Every call goes through your existing `claude` login, so this runs on your
+**subscription** — there is no API key involved and nothing is billed. What a
+sweep actually consumes is your rate limits: the rolling usage window and the
+weekly cap.
 
-To cut cost: fewer scenarios, fewer turns (but keep at least six for drift), or
+The `total_cost_usd` figure the run prints is an API-equivalent valuation of the
+tokens, not a charge. Read it as a relative measure — useful for comparing a
+Haiku subject run against a Sonnet one, not as money.
+
+A full sweep is 4 candidates x 4 scenarios x 8 turns, which is 240 calls, most
+on Sonnet, with context growing as each conversation resumes. That is enough to
+eat a noticeable share of a usage window, so start it when you don't need Claude
+for something else. If you do hit a limit mid-run, calls fail, the harness counts
+the errors and keeps going, and you get a partial report rather than a crash.
+
+`--dry-run` prints the call count before you commit anything. To spend less: fewer
+scenarios, fewer turns (but keep at least six, or drift can't be measured), or
 `--model claude-haiku-4-5-20251001` for a cheaper subject.
 
 ## Adding candidates
